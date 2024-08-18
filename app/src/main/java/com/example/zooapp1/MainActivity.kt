@@ -1,13 +1,13 @@
 package com.example.zooapp1
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         * On item click, fetch full details and display warning if any.
         * Then navigate to details activity with full details.
          */
-        listViewData.setOnItemClickListener { parent, view, position, id ->
+        listViewData.setOnItemClickListener { parent, _, position, _ ->
             // Handle item click
             val selectedItem = parent.getItemAtPosition(position) as String
             val (fullDetails, hasWarning) = fetchFullDetails(selectedItem)
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Load available animals from animals.txt
+    @SuppressLint("DiscouragedApi")
     private fun loadAnimalsData() {
         val animalsTextResourceId = resources.getIdentifier("animals", "raw", packageName)
         val inputStream = resources.openRawResource(animalsTextResourceId)
@@ -71,6 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Load available habitats from habitats.txt
+    @SuppressLint("DiscouragedApi")
     private fun loadHabitatsData() {
         val habitatsTextResourceId = resources.getIdentifier("habitats", "raw", packageName)
         val inputStream = resources.openRawResource(habitatsTextResourceId)
@@ -93,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Fetch full details for the selected item and check for warning
+    @SuppressLint("DiscouragedApi")
     private fun fetchFullDetails(selectedItem: String): Pair<String, Boolean> {
         val animalsTextResourceId = resources.getIdentifier("animals", "raw", packageName)
         val habitatsTextResourceId = resources.getIdentifier("habitats", "raw", packageName)
@@ -150,7 +153,7 @@ class MainActivity : AppCompatActivity() {
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle(warningTitle)
             alertDialogBuilder.setMessage(warningDescription)
-            alertDialogBuilder.setPositiveButton("OK") { dialog, which ->
+            alertDialogBuilder.setPositiveButton("OK") { _, _ ->
                 openDetailsActivity(selectedItem, details)
             }
             alertDialogBuilder.show()
